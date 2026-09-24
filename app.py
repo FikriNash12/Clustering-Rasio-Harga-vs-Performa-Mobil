@@ -129,7 +129,7 @@ with st.sidebar.expander("ℹ️ **Detail Model**", expanded=False):
         "**Model:** K-Means ($K=3$)\n\n"
         "**Fitur:** Engine HP, highway MPG, dan `value_gap` "
         "(residual regresi $\\log(\\text{MSRP})$ terhadap $\\log(\\text{HP})$ dan MPG).\n\n"
-        "**Cakupan Data:** 507 model mobil (2010–2017), non-listrik, MSRP $\\le \\$300\\text{k}$."
+        "**Cakupan Data:** 507 model mobil (2010–2017), non-listrik, MSRP ≤ $300.000."
     )
 
 # =========================================================================
