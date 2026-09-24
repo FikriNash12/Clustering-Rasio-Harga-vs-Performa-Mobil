@@ -5,3 +5,7 @@ venv/
 
 # Lain-lain
 *.zip
+
+# TXT yang tidak perlu
+Tata_Cara_Jalanin_File.txt
+Link_Website.txt

@@ -64,11 +64,57 @@ def prediksi_segmen(hp: float, mpg: float, msrp: float):
     segmen = label_map[cluster]
     return segmen, round(float(value_gap), 3), warning
 
+# -----------------------------------------------------------------------
+# Sidebar Navigasi (Versi Estetik dengan Custom CSS)
+# -----------------------------------------------------------------------
+# Styling CSS khusus untuk merubah radio button menjadi kartu navigasi
+st.sidebar.markdown(
+    """
+    <style>
+    /* Styling kontainer radio button */
+    [data-testid="stSidebar"] div[role="radiogroup"] {
+        gap: 10px;
+    }
+    
+    /* Mengubah item radio menjadi tombol/kartu */
+    [data-testid="stSidebar"] div[role="radiogroup"] > label {
+        background-color: rgba(255, 255, 255, 0.05);
+        padding: 12px 16px;
+        border-radius: 10px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        transition: all 0.25s ease-in-out;
+        cursor: pointer;
+        width: 100%;
+    }
+    
+    /* Efek hover saat kursor diarahkan ke menu */
+    [data-testid="stSidebar"] div[role="radiogroup"] > label:hover {
+        background-color: rgba(255, 255, 255, 0.12);
+        border-color: #1f77b4;
+        transform: translateX(4px);
+    }
+    
+    /* Sembunyikan icon lingkaran radio bawaan Streamlit */
+    [data-testid="stSidebar"] div[role="radiogroup"] > label > div:first-child {
+        display: none;
+    }
 
-# -----------------------------------------------------------------------
-# Sidebar navigasi
-# -----------------------------------------------------------------------
-st.sidebar.title("🚗 Navigasi")
+    /* Teks dalam menu */
+    [data-testid="stSidebar"] div[role="radiogroup"] label p {
+        font-weight: 500;
+        font-size: 15px !important;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True,
+)
+
+# Header Sidebar
+st.sidebar.markdown("### 🚗 **Mobil Analytics**")
+st.sidebar.caption("Segmentasi Rasio Harga vs Performa")
+st.sidebar.markdown("---")
+
+# Menu Navigasi
 page = st.sidebar.radio(
     "Halaman",
     ["📊 Explorer Data", "🔮 Prediksi Segmen"],
@@ -76,11 +122,15 @@ page = st.sidebar.radio(
 )
 
 st.sidebar.markdown("---")
-st.sidebar.caption(
-    "Model: K-Means (K=3) atas fitur Engine HP, highway MPG, dan value_gap "
-    "(residual regresi log(MSRP) terhadap log(HP) dan MPG). "
-    "Dilatih pada 507 model mobil (agregasi Make+Model), tahun 2010-2017, non-listrik, MSRP ≤ $300k."
-)
+
+# Informasi Model (Dikemas dalam Expander/Card agar rapi)
+with st.sidebar.expander("ℹ️ **Detail Model**", expanded=False):
+    st.caption(
+        "**Model:** K-Means ($K=3$)\n\n"
+        "**Fitur:** Engine HP, highway MPG, dan `value_gap` "
+        "(residual regresi $\\log(\\text{MSRP})$ terhadap $\\log(\\text{HP})$ dan MPG).\n\n"
+        "**Cakupan Data:** 507 model mobil (2010–2017), non-listrik, MSRP $\\le \\$300\\text{k}$."
+    )
 
 # =========================================================================
 # HALAMAN 1: EXPLORER DATA
